@@ -37,8 +37,12 @@ func main() {
 	printList(output)
 }
 
-func insertGreatestCommonDivisors(head *ListNode)  *ListNode {
+func insertGreatestCommonDivisors(head *ListNode) *ListNode {
 	current := head
+
+	if current.Next == nil {
+		return head
+	}
 
 	for current != nil && current.Next != nil {
 
@@ -47,17 +51,8 @@ func insertGreatestCommonDivisors(head *ListNode)  *ListNode {
 
 		minV := min(v1, v2)
 
-		var vUp int
-		var vLow int
-
-		if minV != v1 {
-			vUp, vLow = v1, v2
-		} else {
-			vUp, vLow = v2, v1
-		}
-
 		for i := minV; i > 0; i-- {
-			if vUp%i == 0 && vLow%i == 0 {
+			if v1%i == 0 && v2%i == 0 {
 				newNode := &ListNode{Val: i, Next: current.Next}
 				current.Next = newNode
 				current = newNode.Next
@@ -68,7 +63,6 @@ func insertGreatestCommonDivisors(head *ListNode)  *ListNode {
 	return head
 }
 
-// Fonction utilitaire pour afficher une liste chaînée
 func printList(head *ListNode) {
 	for head != nil {
 		fmt.Print(head.Val)
